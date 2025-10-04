@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.List;
 import java.util.Scanner;
 
 public class mainProgram {
@@ -30,11 +31,11 @@ public class mainProgram {
             sc_arq.close();
 
             grafo.print();
-            System.out.println("Método de Tarjan:");
-            metodoTarjan.ponteInicial(grafo);
 
-            System.out.println("Método Naive:");
-            metodoNaive.encontrarPontes(grafo);
+            // Pontes Tarjan:
+            List<int[]> pontes_tarjan = metodoTarjan.ponteInicial(grafo);
+            // Pontes naive:
+            List<int[]> pontes_naive = metodoNaive.encontrarPontes(grafo);
             
         } catch (Exception e) {
             System.out.println("Erro");

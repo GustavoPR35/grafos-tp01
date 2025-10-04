@@ -4,7 +4,6 @@ import java.util.Stack;
 
 public class metodoTarjan {
     public static int tempo = 0;
-    public static List<int[]> pontes = new ArrayList<>();
     
     // Classe para representar um estado na pilha
     private static class EstadoDFS {
@@ -31,7 +30,8 @@ public class metodoTarjan {
      * Inicialmente implementado com recursão, foi alterado com ajuda do ChatGPT
      * para impedir o estouro da pilha de recursão em grafos com muitos vértices.
      */
-    public static void ponteInicial(Grafo grafo) {
+    public static List<int[]> ponteInicial(Grafo grafo) {
+        List<int[]> pontes = new ArrayList<>();
         int n_vertices = grafo.lista.length - 1;
         int TD[] = new int[n_vertices + 1];
         int pai[] = new int[n_vertices + 1];
@@ -39,11 +39,13 @@ public class metodoTarjan {
 
         for (int i = 1; i < grafo.lista.length; i++) {
             if (TD[i] == 0) {
-                ponteIterativo(grafo, i, TD, min, pai);
+                ponteIterativo(grafo, i, TD, min, pai, pontes);
             }
         }
+
+        return pontes;
     }
-    private static void ponteIterativo(Grafo grafo, int inicio, int TD[], int min[], int pai[]) {
+    private static void ponteIterativo(Grafo grafo, int inicio, int TD[], int min[], int pai[], List<int[]> pontes) {
         Stack<EstadoDFS> pilha = new Stack<>();
         
         // Iniciar DFS do vértice inicial
