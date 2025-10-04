@@ -32,6 +32,27 @@ class Grafo {
         }
     }
 
+    public void remover(int origem, int destino) {
+        if (lista[origem].prox != null) {
+            Node ptr = lista[origem];
+            while (ptr.prox != null) {
+                if (ptr.prox.num == destino) {
+                    ptr.prox = ptr.prox.prox;
+                    break;
+                }
+                ptr = ptr.prox;
+            }
+            ptr = lista[destino];
+            while (ptr.prox != null) {
+                if (ptr.prox.num == origem) {
+                    ptr.prox = ptr.prox.prox;
+                    break;
+                }
+                ptr = ptr.prox;
+            }
+        }
+    }
+
     public int getGrau(int vertice) {
         int grau = 0;
 
