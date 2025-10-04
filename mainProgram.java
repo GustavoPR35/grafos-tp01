@@ -30,8 +30,12 @@ public class mainProgram {
             sc_arq.close();
 
             grafo.print();
-
+            System.out.println("Método de Tarjan:");
             metodoTarjan.ponteInicial(grafo);
+
+            System.out.println("Método Naive:");
+            metodoNaive.encontrarPontes(grafo);
+            
         } catch (Exception e) {
             System.out.println("Erro");
             e.printStackTrace();
