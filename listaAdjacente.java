@@ -1,6 +1,4 @@
 import java.io.File;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
 class Node {
@@ -65,9 +63,6 @@ class Grafo {
 
 public class listaAdjacente {
     public static int tempo;
-    public static int[] L;
-    public static int[] nivel;
-    public static int[] pai;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         try {
@@ -97,12 +92,7 @@ public class listaAdjacente {
 
             grafo.print();
 
-            buscaLarguraInicial(grafo);
-
-            System.out.println();
-            for (int i = 1; i < grafo.lista.length; i++) {
-                classificarArestas(grafo, i);
-            }
+            ponteInicial(grafo);
         } catch (Exception e) {
             System.out.println("Erro");
             e.printStackTrace();
@@ -110,56 +100,46 @@ public class listaAdjacente {
         sc.close();
     }
 
-    public static void buscaLarguraInicial(Grafo grafo) {
+    /*
+     * Método de Tarjan para identificação de pontes
+     * Baseado no código encontrado em:
+     * https://www.geeksforgeeks.org/dsa/bridge-in-a-graph/
+     */
+    public static void ponteInicial(Grafo grafo) {
         int n_vertices = grafo.lista.length - 1;
-        tempo = 0;
-        L = new int[n_vertices + 1];
-        nivel = new int[n_vertices + 1];
-        pai = new int[n_vertices + 1];
-
-        Queue<Integer> fila = new LinkedList<>();
+        boolean visitado[] = new boolean[n_vertices + 1];
+        int TD[] = new int[n_vertices + 1];
+        int pai[] = new int[n_vertices + 1];
+        int min[] = new int[n_vertices + 1];
 
         for (int i = 1; i < grafo.lista.length; i++) {
-            if (L[i] == 0) {
-                tempo = tempo + 1;
-                L[i] = tempo;
-                fila.add(grafo.lista[i].num);
-                buscaLargura(grafo, fila);
+            if (!visitado[i]) {
+                ponte(grafo, i, visitado, TD, min, pai);
             }
         }
     }
-    private static void buscaLargura(Grafo grafo, Queue<Integer> fila) {
-        while (!fila.isEmpty()) {
-            int v = fila.poll();
-            Node ptr = grafo.lista[v].prox;
-            while (ptr != null) {
-                int w = ptr.num;
+    private static void ponte(Grafo grafo, int v, boolean visitado[], int TD[], int min[], int pai[]) {
+        visitado[v] = true;
+        tempo = tempo + 1;
+        TD[v] = min[v] = tempo;
 
-                if (L[w] == 0) {
-                    pai[w] = v;
-                    nivel[w] = nivel[v] + 1;
-                    tempo = tempo + 1;
-                    L[w] = tempo;
-                    fila.add(w);
-                }
-
-                ptr = ptr.prox;
-            }
-        }
-    }
-    public static void classificarArestas(Grafo grafo, int v) {
         Node ptr = grafo.lista[v].prox;
         while (ptr != null) {
             int w = ptr.num;
-            if (pai[w] == v) {
-                System.out.println(v + " -- " + w + ": árvore");
-            } else if (nivel[w] == nivel[v] + 1) {
-                System.out.println(v + " -- " + w + ": tio");
-            } else if (nivel[w] == nivel[v] && pai[v] == pai[w] && L[w] > L[v]) {
-                System.out.println(v + " -- " + w + ": irmão");
-            } else if (nivel[w] == nivel[v] && pai[v] != pai[w] && L[w] > L[v]) {
-                System.out.println(v + " -- " + w + ": primo");
+
+            if (!visitado[w]) {
+                pai[w] = v;
+                ponte(grafo, w, visitado, TD, min, pai);
+                min[v] = Math.min(min[v], min[w]);
+
+                if (min[w] > TD[v]) {
+                    System.out.println("Ponte: {" + v + ", " + w + "}");
+                }
             }
+            else if (w != pai[v]) {
+                min[v] = Math.min(min[v], TD[w]);
+            }
+            
             ptr = ptr.prox;
         }
     }
