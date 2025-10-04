@@ -8,7 +8,7 @@ class Node {
     }
 }
 
-class Grafo {
+public class Grafo {
     // Lista de adjacência
     Node[] lista;
 
