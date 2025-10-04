@@ -107,19 +107,17 @@ public class listaAdjacente {
      */
     public static void ponteInicial(Grafo grafo) {
         int n_vertices = grafo.lista.length - 1;
-        boolean visitado[] = new boolean[n_vertices + 1];
         int TD[] = new int[n_vertices + 1];
         int pai[] = new int[n_vertices + 1];
         int min[] = new int[n_vertices + 1];
 
         for (int i = 1; i < grafo.lista.length; i++) {
-            if (!visitado[i]) {
-                ponte(grafo, i, visitado, TD, min, pai);
+            if (TD[i] == 0) {
+                ponte(grafo, i, TD, min, pai);
             }
         }
     }
-    private static void ponte(Grafo grafo, int v, boolean visitado[], int TD[], int min[], int pai[]) {
-        visitado[v] = true;
+    private static void ponte(Grafo grafo, int v, int TD[], int min[], int pai[]) {
         tempo = tempo + 1;
         TD[v] = min[v] = tempo;
 
@@ -127,9 +125,9 @@ public class listaAdjacente {
         while (ptr != null) {
             int w = ptr.num;
 
-            if (!visitado[w]) {
+            if (TD[w] == 0) {
                 pai[w] = v;
-                ponte(grafo, w, visitado, TD, min, pai);
+                ponte(grafo, w, TD, min, pai);
                 min[v] = Math.min(min[v], min[w]);
 
                 if (min[w] > TD[v]) {
