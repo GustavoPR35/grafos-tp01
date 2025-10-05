@@ -4,11 +4,45 @@ import java.util.Scanner;
 
 public class mainProgram {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        try {
-            System.out.print("Escreva o nome do arquivo a ser aberto: ");
 
-            String arquivo = sc.nextLine();
+        System.out.println("\n -------------------------------------------------------------- \n");
+
+        System.out.println("--- Experimentos Eulerianos ---");
+
+        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-1.txt");
+        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-2.txt");
+        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-3.txt");
+        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-4.txt");
+        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-5.txt");
+
+        // System.out.println("\n -------------------------------------------------------------- \n");
+
+        // System.out.println("--- Experimentos Semi-Eulerianos ---");
+
+        // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-1.txt");
+        // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-2.txt");
+        // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-3.txt");
+        // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-4.txt");
+        // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-5.txt");
+
+        // System.out.println("\n -------------------------------------------------------------- \n");
+
+        // System.out.println("--- Experimentos Não Eulerianos ---");
+
+        // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-1.txt");
+        // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-2.txt");
+        // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-3.txt");
+        // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-4.txt");
+        // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-5.txt");
+
+        
+    }
+
+    public static void runByFile(String filename) {
+        try {
+            System.out.print("Rodando com o arquivo: " + filename + "\n");
+
+            String arquivo = filename;
             File file = new File(arquivo);
             Scanner sc_arq = new Scanner(file);
 
@@ -35,10 +69,9 @@ public class mainProgram {
             System.out.println("Graus:");
             int graus_par = 0;
             int graus_impar = 0;
-            for (Node i: grafo.lista) {
+            for (Node i : grafo.lista) {
                 if (i != null) {
                     int grau = grafo.getGrau(i.num);
-                    System.out.print(grau + ", ");
                     if (grau % 2 == 0) {
                         graus_par++;
                     } else {
@@ -81,6 +114,6 @@ public class mainProgram {
             System.out.println("Erro");
             e.printStackTrace();
         }
-        sc.close();
     }
+
 }
