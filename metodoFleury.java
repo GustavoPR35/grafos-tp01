@@ -54,9 +54,6 @@ public class metodoFleury {
             }
         }
 
-        // Obter todas as pontes do grafo atual
-        List<int[]> pontes = metodoTarjan.ponteInicial(grafo);
-
         // Lista para armazenar o caminho euleriano
         List<Integer> caminho = new ArrayList<>();
         caminho.add(v);
@@ -77,7 +74,7 @@ public class metodoFleury {
             // 5. Se d(v) > 1 então
             if (grauV > 1) {
                 // Selecionar aresta {v, w} que não seja ponte em G'
-                w = selecionarArestaNaoPonte(grafoAux, v, pontes);
+                w = selecionarArestaNaoPonte(grafoAux, v);
                 // System.out.println("grauV > 1");
             } else {
                 // Selecionar a única aresta {v, w} disponível em G'
@@ -139,7 +136,9 @@ public class metodoFleury {
      * Seleciona uma aresta {v, w} que não seja ponte em G'
      * Utiliza o método de Tarjan para verificar se a aresta é ponte
      */
-    private static int selecionarArestaNaoPonte(Grafo grafo, int v, List<int[]> pontes) {
+    private static int selecionarArestaNaoPonte(Grafo grafo, int v) {
+        // Obter todas as pontes do grafo atual
+        List<int[]> pontes = metodoTarjan.ponteInicial(grafo);
         // Percorrer os vizinhos de v
         Node ptr = grafo.lista[v].prox;
         while (ptr != null) {

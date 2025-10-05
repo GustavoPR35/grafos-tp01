@@ -9,27 +9,27 @@ public class mainProgram {
 
         System.out.println("--- Experimentos Eulerianos ---");
 
-        // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-1.txt");
+        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-1.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-2.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-3.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-4.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-5.txt");
 
-        // System.out.println("\n -------------------------------------------------------------- \n");
+        System.out.println("\n -------------------------------------------------------------- \n");
 
-        // System.out.println("--- Experimentos Semi-Eulerianos ---");
+        System.out.println("--- Experimentos Semi-Eulerianos ---");
 
-        // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100-1.txt");
+        runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-1.txt");
         // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-2.txt");
         // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-3.txt");
         // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-4.txt");
         // runByFile("Grafos/Experimentos/SemiEulerianos/graph-se-100000-5.txt");
 
-        // System.out.println("\n -------------------------------------------------------------- \n");
+        System.out.println("\n -------------------------------------------------------------- \n");
 
-        // System.out.println("--- Experimentos Não Eulerianos ---");
+        System.out.println("--- Experimentos Não Eulerianos ---");
 
-        // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-1.txt");
+        runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-100000-1.txt");
         // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-1000-2.txt");
         // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-1000-3.txt");
         // runByFile("Grafos/Experimentos/NaoEulerianos/graph-ne-1000-4.txt");
@@ -89,7 +89,7 @@ public class mainProgram {
             List<Integer> caminhoEuleriano = metodoFleury.encontrarCaminhoEuleriano(grafo);
             long endTime = System.currentTimeMillis(); // Armazena o tempo final
             long duration = endTime - startTime; // Calcula a diferença
-            metodoFleury.imprimirCaminho(caminhoEuleriano);
+            //metodoFleury.imprimirCaminho(caminhoEuleriano);
             if (caminhoEuleriano == null || caminhoEuleriano.isEmpty()) {
                 System.out.println("Não existe caminho euleriano");
             } else {
