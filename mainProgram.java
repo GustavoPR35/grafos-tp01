@@ -30,13 +30,16 @@ public class mainProgram {
             }
             sc_arq.close();
 
-            grafo.print();
+            // grafo.print();
 
             // Pontes Tarjan:
             List<int[]> pontes_tarjan = metodoTarjan.ponteInicial(grafo);
             // Pontes naive:
             List<int[]> pontes_naive = metodoNaive.encontrarPontes(grafo);
-            
+
+            // Algoritmo de Fleury - Análise do grafo:
+            metodoFleury.analisarGrafo(grafo);
+
         } catch (Exception e) {
             System.out.println("Erro");
             e.printStackTrace();
