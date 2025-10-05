@@ -66,7 +66,17 @@ public class mainProgram {
             // metodoNaive.encontrarPontes(grafo);
 
             // Algoritmo de Fleury - Análise do grafo:
-            metodoFleury.analisarGrafo(grafo);
+            // metodoFleury.analisarGrafo(grafo);
+            long startTime = System.currentTimeMillis();
+            List<Integer> caminhoEuleriano = metodoFleury.encontrarCaminhoEuleriano(grafo);
+            long endTime = System.currentTimeMillis(); // Armazena o tempo final
+            long duration = endTime - startTime; // Calcula a diferença
+            if (caminhoEuleriano == null || caminhoEuleriano.isEmpty()) {
+                System.out.println("Não existe caminho euleriano");
+            } else {
+                System.out.println("Caminho euleriano encontrado");
+            }
+            System.out.println("Tempo de execução: " + duration + " milissegundos");
 
         } catch (Exception e) {
             System.out.println("Erro");

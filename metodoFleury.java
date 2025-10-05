@@ -175,6 +175,7 @@ public class metodoFleury {
 
         // Obter todas as pontes do grafo atual
         List<int[]> pontes = metodoTarjan.ponteInicial(grafo);
+        // List<int[]> pontes = metodoNaive.encontrarPontes(grafo);
 
         // Percorrer os vizinhos de v
         Node ptr = grafo.lista[v].prox;

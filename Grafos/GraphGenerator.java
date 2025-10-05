@@ -358,7 +358,7 @@ public class GraphGenerator {
 
     // Demonstração / testes rápidos
     public static void main(String[] args) throws IOException {
-        int[] n = {10000}; // número de vértices (mude para testar)
+        int[] n = {1000}; // número de vértices (mude para testar)
         double p = 0.18; // densidade inicial
         long seed = 42;
 
@@ -368,23 +368,34 @@ public class GraphGenerator {
             System.out.println("Gerando euleriano: " + i + " vértices...");
             Graph gE = generate(Type.EULERIAN, i, p, seed);
             gE.makeFile("./Grafos/Experimentos/Eulerianos/graph-e-" + i + ".txt");
+            // Libera referência
+            gE = null;
+            // (opcional) força GC
+            System.gc();
         }
         System.out.println();
+        System.gc();
 
         System.out.println("=== Exemplos: Semi-Euleriano ===");
         for (int i : n) {
             System.out.println("Gerando semi-euleriano: " + i + " vértices...");
             Graph gS = generate(Type.SEMI_EULERIAN, i, p, seed+1);
             gS.makeFile("./Grafos/Experimentos/SemiEulerianos/graph-se-" + i + ".txt");
+            gS = null;
+            System.gc();
         }
         System.out.println();
+        System.gc();
 
         System.out.println("=== Exemplos: Não-Euleriano ===");
         for (int i : n) {
             System.out.println("Gerando não-euleriano: " + i + " vértices...");
             Graph gN = generate(Type.NON_EULERIAN, i, p, seed+2);
             gN.makeFile("./Grafos/Experimentos/NaoEulerianos/graph-ne-" + i + ".txt");
+            gN = null;
+            System.gc();
         }
         System.out.println();
+        System.gc();
     }
 }
