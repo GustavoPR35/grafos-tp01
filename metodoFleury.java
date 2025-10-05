@@ -4,42 +4,6 @@ import java.util.List;
 public class metodoFleury {
 
     /**
-     * Verifica o tipo de grafo e imprime as informações.
-     * 
-     * @param grafo O grafo a ser analisado
-     */
-    public static void analisarGrafo(Grafo grafo) {
-        int n_vertices = grafo.lista.length - 1;
-
-        // Contar vértices de grau ímpar
-        int verticesGrauImpar = 0;
-
-        for (int i = 1; i <= n_vertices; i++) {
-            int grau = grafo.getGrau(i);
-            if (grau % 2 != 0) {
-                verticesGrauImpar++;
-            }
-        }
-
-        // Determinar tipo do grafo
-        String tipoGrafo;
-        if (verticesGrauImpar == 0) {
-            tipoGrafo = "Euleriano";
-        } else if (verticesGrauImpar == 2) {
-            tipoGrafo = "Semi-Euleriano";
-        } else {
-            tipoGrafo = "Não-Euleriano";
-        }
-
-        // Imprimir resultados
-        System.out.println();
-        System.out.println("Análise do Grafo (Algoritmo de Fleury)");
-        System.out.println("Tipo: " + tipoGrafo);
-        System.out.println("Número total de vértices: " + n_vertices);
-        System.out.println("Vértices de grau ímpar: " + verticesGrauImpar);
-    }
-
-    /**
      * Algoritmo de Fleury para encontrar um caminho euleriano ou ciclo euleriano em um grafo.
      * 
      * @param grafo O grafo original
@@ -47,6 +11,9 @@ public class metodoFleury {
      */
     public static List<Integer> encontrarCaminhoEuleriano(Grafo grafo) {
         int n_vertices = grafo.lista.length - 1;
+
+        // Determinar tipo do grafo
+        String tipoGrafo;
 
         // 1. Verificar se V(G) possui 3 ou mais vértices de grau ímpar
         int verticesGrauImpar = 0;
@@ -62,6 +29,13 @@ public class metodoFleury {
 
         // Se houver 3 ou mais vértices de grau ímpar, PARE
         if (verticesGrauImpar >= 3) {
+
+            tipoGrafo = "Não-Euleriano";
+
+            System.out.println();
+            System.out.println("Análise do Grafo (Algoritmo de Fleury)");
+            System.out.println("Tipo: " + tipoGrafo);
+
             return null;
         }
 
@@ -117,6 +91,19 @@ public class metodoFleury {
             caminho.add(w);
             v = w;
         }
+
+        if (verticesGrauImpar == 0) {
+            tipoGrafo = "Euleriano";
+        } else if (verticesGrauImpar == 2) {
+            tipoGrafo = "Semi-Euleriano";
+        } else {
+            tipoGrafo = "Não-Euleriano";
+        }
+
+        // Imprimir resultados
+        System.out.println();
+        System.out.println("Análise do Grafo (Algoritmo de Fleury)");
+        System.out.println("Tipo: " + tipoGrafo);
 
         return caminho;
     }

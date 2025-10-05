@@ -66,7 +66,6 @@ public class mainProgram {
             // metodoNaive.encontrarPontes(grafo);
 
             // Algoritmo de Fleury - Análise do grafo:
-            // metodoFleury.analisarGrafo(grafo);
             long startTime = System.currentTimeMillis();
             List<Integer> caminhoEuleriano = metodoFleury.encontrarCaminhoEuleriano(grafo);
             long endTime = System.currentTimeMillis(); // Armazena o tempo final
