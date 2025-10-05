@@ -32,10 +32,38 @@ public class mainProgram {
 
             grafo.print();
 
-            // Pontes Tarjan:
-            List<int[]> pontes_tarjan = metodoTarjan.ponteInicial(grafo);
-            // Pontes naive:
-            List<int[]> pontes_naive = metodoNaive.encontrarPontes(grafo);
+            System.out.println("Graus:");
+            int graus_par = 0;
+            int graus_impar = 0;
+            for (Node i: grafo.lista) {
+                if (i != null) {
+                    int grau = grafo.getGrau(i.num);
+                    System.out.print(grau + ", ");
+                    if (grau % 2 == 0) {
+                        graus_par++;
+                    } else {
+                        graus_impar++;
+                    }
+                }
+            }
+            System.out.println();
+
+            System.out.println("Número de graus pares: " + graus_par);
+            System.out.println("Número de graus impares: " + graus_impar);
+
+            // System.out.println();
+
+            // System.out.println("Método de Tarjan:");
+            // List<int[]> pontes_tarjan = metodoTarjan.ponteInicial(grafo);
+            // for (int i[] : pontes_tarjan) {
+            //     System.out.println("Ponte: {" + i[0] + ", " + i[1] + "}");
+            // }
+
+            // System.out.println();
+
+            // System.out.println("Método Naive:");
+            // // List<int[]> pontes_naive = metodoNaive.encontrarPontes(grafo);
+            // metodoNaive.encontrarPontes(grafo);
             
         } catch (Exception e) {
             System.out.println("Erro");
