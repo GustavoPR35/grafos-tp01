@@ -365,20 +365,20 @@ public static void main(String[] args) throws IOException {
         long seed = 42;
 
 
-        // System.out.println("=== Exemplos: Euleriano ===");
-        // for (int i : n) {
-        //     for (int j = 0; j < 5; j++) {
-        //         System.out.println("Gerando euleriano " + (j+1) + ": " + i + " vértices...");
-        //         Graph gE = generate(Type.EULERIAN, i, p, (seed+j*2));
-        //         gE.makeFile("./Grafos/Experimentos/Eulerianos/graph-e-" + i + "-" + (j+1) + ".txt");
-        //         // Libera referência
-        //         gE = null;
-        //         // (opcional) força GC
-        //         System.gc();
-        //     }
-        // }
-        // System.out.println();
-        // System.gc();
+        System.out.println("=== Exemplos: Euleriano ===");
+        for (int i : n) {
+            for (int j = 0; j < 5; j++) {
+                System.out.println("Gerando euleriano " + (j+1) + ": " + i + " vértices...");
+                Graph gE = generate(Type.EULERIAN, i, p, (seed+j*2));
+                gE.makeFile("./Grafos/Experimentos/Eulerianos/graph-e-" + i + "-" + (j+1) + ".txt");
+                // Libera referência
+                gE = null;
+                // (opcional) força GC
+                System.gc();
+            }
+        }
+        System.out.println();
+        System.gc();
 
         System.out.println("=== Exemplos: Semi-Euleriano ===");
         for (int i : n) {

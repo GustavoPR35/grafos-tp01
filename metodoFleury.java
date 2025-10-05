@@ -25,22 +25,19 @@ public class metodoFleury {
                 verticesGrauImpar++;
                 verticesImpares.add(i);
             }
-        }
+            if (verticesGrauImpar >= 3) {
+                tipoGrafo = "Não-Euleriano";
 
-        // Se houver 3 ou mais vértices de grau ímpar, PARE
-        if (verticesGrauImpar >= 3) {
-
-            tipoGrafo = "Não-Euleriano";
-
-            System.out.println();
-            System.out.println("Análise do Grafo (Algoritmo de Fleury)");
-            System.out.println("Tipo: " + tipoGrafo);
-
-            return null;
+                System.out.println();
+                System.out.println("Análise do Grafo (Algoritmo de Fleury)");
+                System.out.println("Tipo: " + tipoGrafo);
+                
+                return null;
+            }
         }
 
         // 2. Criar grafo auxiliar G' = (V', E') tal que V' ⊆ V(G) e E' ⊆ E(G)
-        Grafo grafoAux = copiarGrafo(grafo);
+        Grafo grafoAux = grafo.copy();
 
         // 3. Selecionar vértice inicial v ∈ V' (escolher v cujo grau seja ímpar, se houver)
         int v;
@@ -57,16 +54,21 @@ public class metodoFleury {
             }
         }
 
+        // Obter todas as pontes do grafo atual
+        List<int[]> pontes = metodoTarjan.ponteInicial(grafo);
+
         // Lista para armazenar o caminho euleriano
         List<Integer> caminho = new ArrayList<>();
         caminho.add(v);
 
         // 4. Enquanto E' ≠ ∅ efetuar
         while (possuiArestas(grafoAux)) {
+            // System.out.println(v);
             int grauV = grafoAux.getGrau(v);
 
             if (grauV == 0) {
                 // Não há mais arestas disponíveis a partir de v
+                // System.out.println("Não há mais arestas disponíveis em " + v);
                 break;
             }
 
@@ -75,14 +77,17 @@ public class metodoFleury {
             // 5. Se d(v) > 1 então
             if (grauV > 1) {
                 // Selecionar aresta {v, w} que não seja ponte em G'
-                w = selecionarArestaNaoPonte(grafoAux, v);
+                w = selecionarArestaNaoPonte(grafoAux, v, pontes);
+                // System.out.println("grauV > 1");
             } else {
                 // Selecionar a única aresta {v, w} disponível em G'
                 w = obterPrimeiroVizinho(grafoAux, v);
+                // System.out.println("Selecionando unica aresta disponível");
             }
 
             if (w == -1) {
                 // Não foi possível encontrar uma aresta válida
+                // System.out.println("Não houve aresta válida");
                 break;
             }
 
@@ -106,28 +111,6 @@ public class metodoFleury {
         System.out.println("Tipo: " + tipoGrafo);
 
         return caminho;
-    }
-
-    /**
-     * Copia um grafo criando uma nova instância
-     */
-    private static Grafo copiarGrafo(Grafo original) {
-        int n_vertices = original.lista.length - 1;
-        Grafo copia = new Grafo(n_vertices);
-
-        // Copiar todas as arestas
-        for (int i = 1; i <= n_vertices; i++) {
-            Node ptr = original.lista[i].prox;
-            while (ptr != null) {
-                // Adicionar apenas se i < ptr.num para evitar duplicação
-                if (i < ptr.num) {
-                    copia.adicionar(i, ptr.num);
-                }
-                ptr = ptr.prox;
-            }
-        }
-
-        return copia;
     }
 
     /**
@@ -156,14 +139,7 @@ public class metodoFleury {
      * Seleciona uma aresta {v, w} que não seja ponte em G'
      * Utiliza o método de Tarjan para verificar se a aresta é ponte
      */
-    private static int selecionarArestaNaoPonte(Grafo grafo, int v) {
-        // Resetar o tempo do algoritmo de Tarjan
-        metodoTarjan.tempo = 0;
-
-        // Obter todas as pontes do grafo atual
-        List<int[]> pontes = metodoTarjan.ponteInicial(grafo);
-        // List<int[]> pontes = metodoNaive.encontrarPontes(grafo);
-
+    private static int selecionarArestaNaoPonte(Grafo grafo, int v, List<int[]> pontes) {
         // Percorrer os vizinhos de v
         Node ptr = grafo.lista[v].prox;
         while (ptr != null) {
@@ -174,12 +150,14 @@ public class metodoFleury {
             for (int[] ponte : pontes) {
                 if ((ponte[0] == v && ponte[1] == w) || (ponte[0] == w && ponte[1] == v)) {
                     ehPonte = true;
+                    // System.out.println("Ponte: {" + ponte[0] + ", " + ponte[1] + "}");
                     break;
                 }
             }
 
             // Se não é ponte, retornar este vizinho
             if (!ehPonte) {
+                // System.out.println("Não é ponte: {" + v + ", " + w + "}");
                 return w;
             }
 

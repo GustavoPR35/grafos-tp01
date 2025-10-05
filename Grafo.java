@@ -11,12 +11,26 @@ class Node {
 public class Grafo {
     // Lista de adjacência
     Node[] lista;
+    int qntVertices;
 
     public Grafo(int qntVertices) {
         this.lista = new Node[qntVertices + 1];
+        this.qntVertices = qntVertices;
         for (int i = 1; i <= qntVertices; i++) {
             lista[i] = new Node(i);
         }
+    }
+
+    public Grafo copy() {
+        Grafo copia = new Grafo(this.qntVertices);
+        for (int i = 1; i < lista.length; i++) {
+            Node ptr = lista[i].prox;
+            while (ptr != null) {
+                copia.adicionar(i, ptr.num);
+                ptr = ptr.prox;
+            }
+        }
+        return copia;
     }
 
     public void adicionar(int origem, int destino) {
