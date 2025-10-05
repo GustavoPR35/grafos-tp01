@@ -1,99 +1,60 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 public class metodoTarjan {
+
     public static int tempo = 0;
-    
-    // Classe para representar um estado na pilha
-    private static class EstadoDFS {
-        int vertice;
-        int pai;
-        Node atual;
-        boolean visitado;
-        boolean processandoFilho;
-        int filho;
-        
-        EstadoDFS(int vertice, int pai, Node atual) {
-            this.vertice = vertice;
-            this.pai = pai;
-            this.atual = atual;
-            this.visitado = false;
-            this.processandoFilho = false;
-        }
-    }
 
     /*
-     * Método de Tarjan para identificação de pontes (versão iterativa)
+     * Método de Tarjan para identificação de pontes
      * Baseado no código encontrado em:
      * https://www.geeksforgeeks.org/dsa/bridge-in-a-graph/
-     * Inicialmente implementado com recursão, foi alterado com ajuda do ChatGPT
-     * para impedir o estouro da pilha de recursão em grafos com muitos vértices.
      */
-    public static List<int[]> ponteInicial(Grafo grafo) {
-        List<int[]> pontes = new ArrayList<>();
+    public static boolean encontrarPonte(Grafo grafo, int v, int w) {
         int n_vertices = grafo.lista.length - 1;
         int TD[] = new int[n_vertices + 1];
         int pai[] = new int[n_vertices + 1];
         int min[] = new int[n_vertices + 1];
 
+        int origem_v = v;
+        int destino_w = w;
+
         for (int i = 1; i < grafo.lista.length; i++) {
             if (TD[i] == 0) {
-                ponteIterativo(grafo, i, TD, min, pai, pontes);
+                if (tarjan(grafo, i, TD, min, pai, origem_v, destino_w)) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
 
-        return pontes;
-    }
-    private static void ponteIterativo(Grafo grafo, int inicio, int TD[], int min[], int pai[], List<int[]> pontes) {
-        Stack<EstadoDFS> pilha = new Stack<>();
-        
-        // Iniciar DFS do vértice inicial
-        pilha.push(new EstadoDFS(inicio, -1, grafo.lista[inicio].prox));
-        
-        while (!pilha.isEmpty()) {
-            EstadoDFS estado = pilha.peek();
-            int v = estado.vertice;
-            
-            // Primeira visita ao vértice
-            if (!estado.visitado) {
-                tempo++;
-                TD[v] = min[v] = tempo;
-                pai[v] = estado.pai;
-                estado.visitado = true;
-            }
-            
-            // Se está processando retorno de um filho
-            if (estado.processandoFilho) {
-                int w = estado.filho;
+    private static boolean tarjan(Grafo grafo, int v, int TD[], int min[], int pai[], int origem_v, int destino_w) {
+        tempo = tempo + 1;
+        TD[v] = min[v] = tempo;
+        Node ptr = grafo.lista[v].prox;
+
+        while (ptr != null) {
+            int w = ptr.num;
+
+            if (TD[w] == 0) {
+                pai[w] = v;
+                if (tarjan(grafo, w, TD, min, pai, origem_v, destino_w)) {
+                    return true;
+                }
                 min[v] = Math.min(min[v], min[w]);
-                
-                // Verificar se é uma ponte
+
                 if (min[w] > TD[v]) {
-                    pontes.add(new int[]{v, w});
+                    if ((v == origem_v && w == destino_w) || (v == destino_w && w == origem_v)) {
+                        return true;
+                    }
                 }
-                
-                estado.processandoFilho = false;
+            }
+
+            else if (w != pai[v]) {
+                min[v] = Math.min(min[v], TD[w]);
             }
             
-            // Processar próximo vizinho
-            if (estado.atual != null) {
-                int w = estado.atual.num;
-                estado.atual = estado.atual.prox;
-                
-                if (TD[w] == 0) {
-                    // Vértice não visitado - fazer DFS
-                    estado.processandoFilho = true;
-                    estado.filho = w;
-                    pilha.push(new EstadoDFS(w, v, grafo.lista[w].prox));
-                } else if (w != pai[v]) {
-                    // Aresta de retorno
-                    min[v] = Math.min(min[v], TD[w]);
-                }
-            } else {
-                // Terminou de processar todos os vizinhos
-                pilha.pop();
-            }
+            ptr = ptr.prox;
         }
+        return false;
     }
+
 }

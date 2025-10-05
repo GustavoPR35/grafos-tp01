@@ -137,26 +137,18 @@ public class metodoFleury {
      * Utiliza o método de Tarjan para verificar se a aresta é ponte
      */
     private static int selecionarArestaNaoPonte(Grafo grafo, int v) {
-        // Obter todas as pontes do grafo atual
-        List<int[]> pontes = metodoTarjan.ponteInicial(grafo);
+        metodoTarjan.tempo = 0;
+
         // Percorrer os vizinhos de v
         Node ptr = grafo.lista[v].prox;
         while (ptr != null) {
             int w = ptr.num;
 
             // Verificar se a aresta {v, w} é uma ponte
-            boolean ehPonte = false;
-            for (int[] ponte : pontes) {
-                if ((ponte[0] == v && ponte[1] == w) || (ponte[0] == w && ponte[1] == v)) {
-                    ehPonte = true;
-                    // System.out.println("Ponte: {" + ponte[0] + ", " + ponte[1] + "}");
-                    break;
-                }
-            }
+            boolean ehPonte = metodoTarjan.encontrarPonte(grafo, v, w);
 
             // Se não é ponte, retornar este vizinho
             if (!ehPonte) {
-                // System.out.println("Não é ponte: {" + v + ", " + w + "}");
                 return w;
             }
 
