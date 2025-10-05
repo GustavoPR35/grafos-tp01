@@ -9,7 +9,7 @@ public class mainProgram {
 
         System.out.println("--- Experimentos Eulerianos ---");
 
-        runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-1.txt");
+        // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-1.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-2.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-3.txt");
         // runByFile("Grafos/Experimentos/Eulerianos/graph-e-100000-4.txt");
@@ -84,27 +84,12 @@ public class mainProgram {
             System.out.println("Número de graus pares: " + graus_par);
             System.out.println("Número de graus impares: " + graus_impar);
 
-            // System.out.println();
-
-            // System.out.println("Método de Tarjan:");
-            // List<int[]> pontes_tarjan = metodoTarjan.ponteInicial(grafo);
-            // for (int i[] : pontes_tarjan) {
-            //     System.out.println("Ponte: {" + i[0] + ", " + i[1] + "}");
-            // }
-
-            // System.out.println();
-
-            // System.out.println("Método Naive:");
-            // // List<int[]> pontes_naive = metodoNaive.encontrarPontes(grafo);
-            // metodoNaive.encontrarPontes(grafo);
-
             // Algoritmo de Fleury - Análise do grafo:
             long startTime = System.currentTimeMillis();
             List<Integer> caminhoEuleriano = metodoFleury.encontrarCaminhoEuleriano(grafo);
-            // System.out.println(caminhoEuleriano.size());
-            metodoFleury.imprimirCaminho(caminhoEuleriano);
             long endTime = System.currentTimeMillis(); // Armazena o tempo final
             long duration = endTime - startTime; // Calcula a diferença
+            metodoFleury.imprimirCaminho(caminhoEuleriano);
             if (caminhoEuleriano == null || caminhoEuleriano.isEmpty()) {
                 System.out.println("Não existe caminho euleriano");
             } else {
