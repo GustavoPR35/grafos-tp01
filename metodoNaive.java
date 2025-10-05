@@ -18,7 +18,7 @@ public class metodoNaive {
             boolean conectados = haCaminho(grafo, u, v);
             if (!conectados) {
                 pontes.add(new int[]{u, v});
-                System.out.println("Ponte: {" + u + ", " + v + "}");
+                // System.out.println("Ponte: {" + u + ", " + v + "}");
             }
 
             grafo.adicionar(u, v);

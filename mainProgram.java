@@ -30,7 +30,7 @@ public class mainProgram {
             }
             sc_arq.close();
 
-            grafo.print();
+            // grafo.print();
 
             System.out.println("Graus:");
             int graus_par = 0;
@@ -64,7 +64,10 @@ public class mainProgram {
             // System.out.println("Método Naive:");
             // // List<int[]> pontes_naive = metodoNaive.encontrarPontes(grafo);
             // metodoNaive.encontrarPontes(grafo);
-            
+
+            // Algoritmo de Fleury - Análise do grafo:
+            metodoFleury.analisarGrafo(grafo);
+
         } catch (Exception e) {
             System.out.println("Erro");
             e.printStackTrace();
